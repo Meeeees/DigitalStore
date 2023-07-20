@@ -1,0 +1,92 @@
+{
+    "KitchenItems": [
+        {
+            "id": 1,
+            "name": "Beeswax Food Wraps",
+            "price": 1499,
+            "imgName": "beewax.jpeg"
+        },
+        {
+            "id": 2,
+            "name": "Reusable Silicone Food Storage Bags",
+            "price": 2499,
+            "imgName": "food storage reusable.jpeg"
+        },
+        {
+            "id": 3,
+            "name": "Organic Cotton Produce Bags",
+            "price": 1099,
+            "imgName": "reusable cotton bags.jpeg"
+        },
+        {
+            "id": 4,
+            "name": "Bamboo Cutlery Set",
+            "price": 999,
+            "imgName": "reusable cutlery.jpeg"
+        },
+        {
+            "id": 5,
+            "name": "Reusable Stainless Steel Water Bottle",
+            "price": 1999,
+            "imgName": "waterbottle.jpg"
+        }
+    ],
+    "Personal care": [
+        {
+        "id": 6,
+        "name": "Bamboo Toothbrushes",
+        "price": 799,
+        "imgName": "bambooToothbrush.jpeg"
+        },
+        {
+        "id": 7,
+        "name": "Biodegradable Plant-Based Phone Case",
+        "price": 2499,
+        "imgName": "biodegradableCase.jpeg"
+        },
+        {
+        "id": 8,
+        "name": "Glass Straws",
+        "price": 499,
+        "imgName": "glassStraws.jpeg"
+        },
+        {
+        "id": 9,
+        "name": "Reusable Beeswax Tea Light Candles",
+        "price": 1499,
+        "imgName": "BeeswaxCandles.jpeg"
+        }
+    ],
+    "Home& Living": [
+        {
+            "id": 10,
+            "name": "Eco-Friendly Reusable Grocery Bags",
+            "price": 1499,
+            "imgName": "ReusableGroceryBags.jpg"
+        }, 
+        {
+            "id": 11,
+            "name": "Solar-Powered Outdoor Lights",
+            "price": 3499,
+            "imgName": "SolarPoweredLights.jpg"
+        },
+        {
+            "id": 12,
+            "name": "Natural Loofah Kitchen Sponges",
+            "price": 799,
+            "imgName": "LoofahSponges.jpg"
+        },
+        {
+            "id": 13,
+            "name": "Stainless Steel Reusable Food Containers",
+            "price": 2499,
+            "imgName": "Steelcontainers.jpg"
+        },
+        {
+            "id": 14,
+            "name": "Reusable Silicone Baking Mats",
+            "price": 1499,
+            "imgName": "SiliconeMats.jpg"
+        }
+    ]
+}
