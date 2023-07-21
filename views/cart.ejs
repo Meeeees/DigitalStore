@@ -11,61 +11,80 @@
 </head>
 
 <body class="h-screen">
-    Your cart:
-    <% if (items) { %>
-        <% items.forEach(item=> { %>
-            <%- item.itemId %>
-                <%- item.quantity %>
-                    <% }); %>
-                        <% } else { %>
-                            <dialog onload="CartReady()" id="loginModal" class="modal-content">
-                                <h2 class="text-2xl font-semibold mb-4">Login</h2>
-                                <!-- Add your login form here -->
-                                <!-- For simplicity, I'm providing basic input fields -->
-                                <form id="loginForm" action="/Login" method="post" class="mb-4">
-                                    <label class="block mb-2" for="email">Email:</label>
-                                    <input type="email" id="email" name="email"
-                                        class="border border-gray-400 px-2 py-1 rounded w-full">
-                                    <label class="block mb-2" for="password">Password:</label>
-                                    <input type="password" id="password" name="password"
-                                        class="border border-gray-400 px-2 py-1 rounded w-full">
-
-                                    <!-- Add more input fields like password, etc. -->
-                                    <button type="submit"
-                                        class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Login</button>
-                                </form>
-                                <p class="text-gray-600 text-sm">Don't have an account? <button id="openSignupModal"
-                                        class="text-black">Sign
-                                        up here.</button>
-                                </p>
-                                <button id="closeLoginModal">Close</button>
-                            </dialog>
+    <%- include('partials/header.ejs') %>
+        Your cart:
+        <div class="cart-items px-16 flex flex-col gap-12">
+            <% if (items) { %>
+                <% items.forEach(item=> { %>
+                    <% for (const theme in products) { %>
+                        <% products[theme].forEach(product=> { %>
+                            <% if (item.itemId===product.id) { %>
+                                <div class="cart-row border-gray-300 border-2 p-12  my-12 flex"
+                                    ProdId="<%- product.id %>">
+                                    <img src="/product-images/<%- product.imgName %>" class="h-52 object-cover"
+                                        alt="product image">
+                                    <div class="text grid">
+                                        <h3><%- product.name %></h3>
+                                        <span>€<%- product.price / 100 %></span>
+                                        <button class="FavoriteItem"><i class="fa-solid fa-heart"></i></button>
+                                        <button class="text-red-700 RemoveFromCart"><i
+                                                class="fa-solid fa-trash-can"></i></button>
+                                        <input type="number" class="w-8 h-min" value="<%- item.quantity%>">
+                                    </div>
+                                </div>
+                                <% } %>
+                                    <% });} %>
+                                        <% }); %>
+        </div>
 
 
-                            <dialog id="signupModal" class="modal-content">
-                                <h2 class="text-2xl font-semibold mb-4">Sign Up</h2>
-                                <!-- Add your sign-up form here -->
-                                <!-- For simplicity, I'm providing basic input fields -->
+        <% } else { %>
+            <dialog onload="CartReady()" id="loginModal" class="modal-content">
+                <h2 class="text-2xl font-semibold mb-4">Login</h2>
+                <!-- Add your login form here -->
+                <!-- For simplicity, I'm providing basic input fields -->
+                <form id="loginForm" action="/Login" method="post" class="mb-4">
+                    <label class="block mb-2" for="email">Email:</label>
+                    <input type="email" id="email" name="email" class="border border-gray-400 px-2 py-1 rounded w-full">
+                    <label class="block mb-2" for="password">Password:</label>
+                    <input type="password" id="password" name="password"
+                        class="border border-gray-400 px-2 py-1 rounded w-full">
 
-                                <form id="signupForm" action="/SignUp" method="post" class="mb-4">
-                                    <label class="block mb-2" for="email">Email:</label>
-                                    <input type="email" id="email" name="email"
-                                        class="border border-gray-400 px-2 py-1 rounded w-full">
-                                    <label class="block mb-2" for="password">Password:</label>
-                                    <input type="password" id="password" name="password"
-                                        class="border border-gray-400 px-2 py-1 rounded w-full">
-                                    <!-- Add more input fields like password, etc. -->
-                                    <button type="submit"
-                                        class="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Signup</button>
-                                </form>
+                    <!-- Add more input fields like password, etc. -->
+                    <button type="submit"
+                        class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Login</button>
+                </form>
+                <p class="text-gray-600 text-sm">Don't have an account? <button id="openSignupModal"
+                        class="text-black">Sign
+                        up here.</button>
+                </p>
+                <button id="closeLoginModal">Close</button>
+            </dialog>
 
-                                <p class="text-gray-600 text-sm">Already have an account? <button id="openLoginModal"
-                                        class="text-black">Login
-                                        here.</button>
-                                </p>
-                                <button id="closeSignupModal">Close</button>
-                            </dialog>
-                            <% } %>
+
+            <dialog id="signupModal" class="modal-content">
+                <h2 class="text-2xl font-semibold mb-4">Sign Up</h2>
+                <!-- Add your sign-up form here -->
+                <!-- For simplicity, I'm providing basic input fields -->
+
+                <form id="signupForm" action="/SignUp" method="post" class="mb-4">
+                    <label class="block mb-2" for="email">Email:</label>
+                    <input type="email" id="email" name="email" class="border border-gray-400 px-2 py-1 rounded w-full">
+                    <label class="block mb-2" for="password">Password:</label>
+                    <input type="password" id="password" name="password"
+                        class="border border-gray-400 px-2 py-1 rounded w-full">
+                    <!-- Add more input fields like password, etc. -->
+                    <button type="submit"
+                        class="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Signup</button>
+                </form>
+
+                <p class="text-gray-600 text-sm">Already have an account?
+                    <button id="openLoginModal" class="text-black">Login
+                        here.</button>
+                </p>
+                <button id="closeSignupModal">Close</button>
+            </dialog>
+            <% } %>
 </body>
 
 </html>

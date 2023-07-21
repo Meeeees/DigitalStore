@@ -556,6 +556,11 @@ video {
   margin: auto;
 }
 
+.my-12{
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
 .mb-2{
   margin-bottom: 0.5rem;
 }
@@ -584,12 +589,20 @@ video {
   margin-top: 1rem;
 }
 
+.mb-12{
+  margin-bottom: 3rem;
+}
+
 .block{
   display: block;
 }
 
 .flex{
   display: flex;
+}
+
+.grid{
+  display: grid;
 }
 
 .h-12{
@@ -604,8 +617,16 @@ video {
   height: 8rem;
 }
 
+.h-40{
+  height: 10rem;
+}
+
 .h-80{
   height: 20rem;
+}
+
+.h-\[20vh\]{
+  height: 20vh;
 }
 
 .h-\[calc\(100vh-6rem\)\]{
@@ -614,6 +635,15 @@ video {
 
 .h-screen{
   height: 100vh;
+}
+
+.h-52{
+  height: 13rem;
+}
+
+.h-min{
+  height: -moz-min-content;
+  height: min-content;
 }
 
 .w-20{
@@ -630,6 +660,23 @@ video {
 
 .w-full{
   width: 100%;
+}
+
+.w-min{
+  width: -moz-min-content;
+  width: min-content;
+}
+
+.w-8{
+  width: 2rem;
+}
+
+.w-\[16\.66\%\]{
+  width: 16.66%;
+}
+
+.w-16{
+  width: 4rem;
 }
 
 .translate-x-\[-50\%\]{
@@ -662,6 +709,10 @@ video {
   gap: 2.5rem;
 }
 
+.gap-12{
+  gap: 3rem;
+}
+
 .rounded{
   border-radius: 0.25rem;
 }
@@ -678,9 +729,18 @@ video {
   border-width: 1px;
 }
 
+.border-2{
+  border-width: 2px;
+}
+
 .border-gray-400{
   --tw-border-opacity: 1;
   border-color: rgb(156 163 175 / var(--tw-border-opacity));
+}
+
+.border-gray-300{
+  --tw-border-opacity: 1;
+  border-color: rgb(209 213 219 / var(--tw-border-opacity));
 }
 
 .bg-blue-500{
@@ -698,6 +758,11 @@ video {
   background-color: rgb(255 255 255 / var(--tw-bg-opacity));
 }
 
+.bg-red-700{
+  --tw-bg-opacity: 1;
+  background-color: rgb(185 28 28 / var(--tw-bg-opacity));
+}
+
 .object-cover{
   -o-object-fit: cover;
      object-fit: cover;
@@ -705,6 +770,22 @@ video {
 
 .p-2{
   padding: 0.5rem;
+}
+
+.p-20{
+  padding: 5rem;
+}
+
+.p-8{
+  padding: 2rem;
+}
+
+.p-16{
+  padding: 4rem;
+}
+
+.p-12{
+  padding: 3rem;
 }
 
 .px-10{
@@ -735,6 +816,11 @@ video {
 .py-3{
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
+}
+
+.px-16{
+  padding-left: 4rem;
+  padding-right: 4rem;
 }
 
 .pl-5{
@@ -786,6 +872,11 @@ video {
 .text-white{
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.text-red-700{
+  --tw-text-opacity: 1;
+  color: rgb(185 28 28 / var(--tw-text-opacity));
 }
 
 @font-face {
@@ -876,6 +967,10 @@ nav li a:not(.img) {
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.cart-row img {
+  aspect-ratio: 1/1.33;
 }
 
 .hover\:bg-blue-600:hover{

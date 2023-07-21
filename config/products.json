@@ -4,89 +4,103 @@
             "id": 1,
             "name": "Beeswax Food Wraps",
             "price": 1499,
-            "imgName": "beewax.jpeg"
+            "imgName": "beewax.jpeg",
+            "description": "These reusable Beeswax Food Wraps are an eco-friendly alternative to plastic wraps. They are made from organic cotton infused with beeswax, resin, and jojoba oil, creating a natural and sustainable way to keep your food fresh."
         },
         {
             "id": 2,
             "name": "Reusable Silicone Food Storage Bags",
             "price": 2499,
-            "imgName": "food storage reusable.jpeg"
+            "imgName": "food storage reusable.jpg",
+            "description": "Say goodbye to disposable plastic bags with these Reusable Silicone Food Storage Bags. Made from high-quality silicone, they are durable, leak-proof, and can be easily cleaned and reused, reducing plastic waste in your kitchen."
         },
         {
             "id": 3,
             "name": "Organic Cotton Produce Bags",
             "price": 1099,
-            "imgName": "reusable cotton bags.jpeg"
+            "imgName": "reusable cotton bags.jpeg",
+            "description": "These Organic Cotton Produce Bags are perfect for carrying fruits, vegetables, and other groceries. They are made from 100% organic cotton and are reusable, allowing you to reduce the use of plastic bags while shopping."
         },
         {
             "id": 4,
             "name": "Bamboo Cutlery Set",
             "price": 999,
-            "imgName": "reusable cutlery.jpeg"
+            "imgName": "reusable cutlery.jpeg",
+            "description": "Ditch disposable plastic cutlery and opt for this Bamboo Cutlery Set. The set includes a fork, knife, spoon, and chopsticks, all made from sustainable bamboo. Keep them in your bag and say no to single-use plastic utensils."
         },
         {
             "id": 5,
             "name": "Reusable Stainless Steel Water Bottle",
             "price": 1999,
-            "imgName": "waterbottle.jpg"
+            "imgName": "waterbottle.jpg",
+            "description": "Stay hydrated and help the environment with this Reusable Stainless Steel Water Bottle. Made from food-grade stainless steel, it is durable, easy to clean, and can be refilled countless times, reducing the need for disposable plastic water bottles."
         }
     ],
     "Personal care": [
         {
-        "id": 6,
-        "name": "Bamboo Toothbrushes",
-        "price": 799,
-        "imgName": "bambooToothbrush.jpeg"
+            "id": 6,
+            "name": "Bamboo Toothbrushes",
+            "price": 799,
+            "imgName": "bambooToothbrush.jpeg",
+            "description": "Switch to these Bamboo Toothbrushes for a more sustainable oral care routine. The toothbrush handles are made from biodegradable bamboo, while the bristles are BPA-free. Reduce plastic waste and take care of your teeth and the planet at the same time."
         },
         {
-        "id": 7,
-        "name": "Biodegradable Plant-Based Phone Case",
-        "price": 2499,
-        "imgName": "biodegradableCase.jpeg"
+            "id": 7,
+            "name": "Biodegradable Plant-Based Phone Case",
+            "price": 2499,
+            "imgName": "biodegradableCase.jpeg",
+            "description": "Protect your phone and the environment with this Biodegradable Plant-Based Phone Case. Made from renewable plant-based materials, it offers excellent protection for your phone and will naturally break down when disposed of, reducing plastic pollution."
         },
         {
-        "id": 8,
-        "name": "Glass Straws",
-        "price": 499,
-        "imgName": "glassStraws.jpeg"
+            "id": 8,
+            "name": "Glass Straws",
+            "price": 499,
+            "imgName": "glassStraws.jpg",
+            "description": "Sip your beverages in style with these Glass Straws. Made from high-quality borosilicate glass, they are durable and can be reused endlessly. Say goodbye to single-use plastic straws and embrace a more eco-friendly option."
         },
         {
-        "id": 9,
-        "name": "Reusable Beeswax Tea Light Candles",
-        "price": 1499,
-        "imgName": "BeeswaxCandles.jpeg"
+            "id": 9,
+            "name": "Reusable Beeswax Tea Light Candles",
+            "price": 1499,
+            "imgName": "BeeswaxCandles.jpg",
+            "description": "Create a cozy and eco-friendly ambiance with these Reusable Beeswax Tea Light Candles. Made from natural beeswax, they emit a warm and soothing glow, perfect for any occasion. Reduce waste and enjoy the natural beauty of beeswax candles."
         }
     ],
-    "Home& Living": [
+    "Home & Living": [
         {
             "id": 10,
             "name": "Eco-Friendly Reusable Grocery Bags",
             "price": 1499,
-            "imgName": "ReusableGroceryBags.jpg"
-        }, 
+            "imgName": "ReusableGroceryBags.jpg",
+            "description": "Make grocery shopping more sustainable with these Eco-Friendly Reusable Grocery Bags. Made from sturdy and washable materials, they are perfect for carrying groceries and other items. Ditch disposable plastic bags and opt for these eco-friendly alternatives."
+        },
         {
             "id": 11,
             "name": "Solar-Powered Outdoor Lights",
             "price": 3499,
-            "imgName": "SolarPoweredLights.jpg"
+            "imgName": "SolarPoweredLights.jpg",
+            "description": "Illuminate your outdoor space with these Solar-Powered Outdoor Lights. Harness the power of the sun to light up your garden or patio, reducing energy consumption and carbon footprint. Enjoy beautiful outdoor lighting without the need for electricity."
         },
         {
             "id": 12,
             "name": "Natural Loofah Kitchen Sponges",
             "price": 799,
-            "imgName": "LoofahSponges.jpg"
+            "imgName": "LoofahSponges.jpg",
+            "description": "Keep your kitchen clean and eco-friendly with these Natural Loofah Kitchen Sponges. Made from natural loofah fibers, they are biodegradable and safe for all your cleaning needs. Say goodbye to synthetic sponges and switch to a sustainable alternative."
         },
         {
             "id": 13,
             "name": "Stainless Steel Reusable Food Containers",
             "price": 2499,
-            "imgName": "Steelcontainers.jpg"
+            "imgName": "Steelcontainers.jpg",
+            "description": "Store your food in style and sustainability with these Stainless Steel Reusable Food Containers. Made from high-quality stainless steel, they are durable, leak-proof, and can be used for storing leftovers or carrying meals on the go."
         },
         {
             "id": 14,
             "name": "Reusable Silicone Baking Mats",
             "price": 1499,
-            "imgName": "SiliconeMats.jpg"
+            "imgName": "SiliconeMats.jpg",
+            "description": "Upgrade your baking game with these Reusable Silicone Baking Mats. They provide a non-stick surface for baking and roasting, eliminating the need for parchment paper or cooking sprays. Easy to clean and eco-friendly for all your baking needs."
         }
     ]
 }

@@ -38,15 +38,22 @@ app.get('/cart', (req, res) => {
     const token = req.cookies.token
     console.log(token)
     if (token) {
-        jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
+        jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
             if (err) {
                 console.log(err)
 
             }
             console.log(decoded)
-            let items = await database.GetCart(decoded.email)
-            console.log(items)
-            res.render('cart', { items: items })
+            fs.readFile("./config/products.json", async (err, data) => {
+                if (err) {
+                    console.log('error reading file:', err)
+                } else {
+
+                    let items = await database.GetCart(decoded.email)
+                    products = JSON.parse(data)
+                    res.render('cart', { items: items, products: products })
+                }
+            })
         })
     } else {
         res.render('cart')
