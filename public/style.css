@@ -93,3 +93,73 @@ nav li a:not(.img) {
 .cart-row img {
     aspect-ratio: 1/1.33;
 }
+
+.ourCollection {
+    position: relative;
+    width: max-content
+}
+
+.ourCollection::after {
+    position: absolute;
+    height: 100%;
+    width: 1px;
+    background-color: #333;
+    content: "";
+    right: -0.75rem;
+    top: 0px;
+
+
+}
+
+.side-menu-sep {
+    position: relative;
+}
+
+.side-menu-sep::after {
+    position: absolute;
+    height: 1px;
+    width: 100px;
+    background-color: #333;
+    content: "";
+    bottom: -0.75rem;
+    left: 0px;
+}
+
+/* .top-menu {
+    position: relative;
+}
+
+.top-menu::after {
+    position: absolute;
+    height: 1px;
+    width: calc(100% - 30px);
+    background-color: #333;
+    content: "";
+    bottom: -1.5rem;
+    left: 20px;
+} */
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+.shop-item {
+    position: relative;
+}
+
+.shop-item::before {
+    position: absolute;
+    height: 1px;
+    width: 100%;
+    background-color: #333;
+    content: "";
+    top: -0.75rem;
+    left: 0px;
+}

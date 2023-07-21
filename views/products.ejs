@@ -14,70 +14,143 @@
 <body class="h-screen" onload="ready()">
 
     <%- include('partials/header.ejs')%>
-        Our products
-        <div class="shop-items">
 
-            <% for (const theme in products) { %>
-                <% products[theme].forEach(item=> { %>
-                    <div class="shop-item m-4" data-item-id="<%= item.id %>">
-                        <img class="shop-item-image h-80 w-60 object-cover" src="product-images/<%= item.imgName %>">
-                        <!-- <div class="h-32"> -->
-                        <span class="shop-item-title w-60 h-12 mt-2 text-center block m-auto">
-                            <%= item.name %>
-                        </span>
-                        <div class="shop-item-details">
-                            <span class="shop-item-price">€<%= item.price /100 %></span>
-                            <button class="bg-green-500 text-white p-2 rounded-xl add-to-cart-button" type="button">ADD
-                                TO CART</button>
-                        </div>
-                        <!-- </div> -->
+        <main class="mt-12 flex">
+            <div class="side-menu ml-2 mr-4 w-32">
+                <div class="mb-12">
+                    <h3 class="side-menu-sep mb-6">Categories</h3>
+                    <h5 class="font-semibold">Home & Living</h5>
+                    <h5>Personal care</h5>
+                    <h5>Kitchen items</h5>
+                </div>
+
+                <div>
+                    <h3 class="side-menu-sep mb-6">Price (€)</h3>
+                    <div class="flex ml-2">
+                        <input type="number" class="w-8 text-center border-[1px] border-gray-400 rounded-md" value="10">
+                        <p class="mx-2">-</p>
+                        <input type="number" class="w-8 text-center border-[1px] border-gray-400 rounded-md" value="10">
                     </div>
-                    <% }); %>
-                        <% } %>
-        </div>
-        <dialog id="loginModal" class="modal-content">
-            <h2 class="text-2xl font-semibold mb-4">Login</h2>
-            <!-- Add your login form here -->
-            <!-- For simplicity, I'm providing basic input fields -->
-            <form id="loginForm" action="/Login" method="post" class="mb-4">
-                <label class="block mb-2" for="email">Email:</label>
-                <input type="email" id="email" name="email" class="border border-gray-400 px-2 py-1 rounded w-full">
-                <label class="block mb-2" for="password">Password:</label>
-                <input type="password" id="password" name="password"
-                    class="border border-gray-400 px-2 py-1 rounded w-full">
-
-                <!-- Add more input fields like password, etc. -->
-                <button type="submit"
-                    class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Login</button>
-            </form>
-            <p class="text-gray-600 text-sm">Don't have an account? <button id="openSignupModal" class="text-black">Sign
-                    up here.</button>
-            </p>
-            <button id="closeLoginModal">Close</button>
-        </dialog>
 
 
-        <dialog id="signupModal" class="modal-content">
-            <h2 class="text-2xl font-semibold mb-4">Sign Up</h2>
-            <!-- Add your sign-up form here -->
-            <!-- For simplicity, I'm providing basic input fields -->
+                </div>
+            </div>
+            <section class="flex flex-col ml-12 pr-8">
+                <div class="top-menu flex justify-between mb-16">
+                    <div class="flex">
+                        <h3 class="font-bold ourCollection">Our collection</h3>
+                        <h5 class="font-thin ml-6">Home & Living</h5>
+                    </div>
+                    <div class="flex">
+                        <p>Sorting</p>
+                        <select class="border-2 border-black rounded-md ml-2" name="sort" id="sort">
+                            <option value="price">Price</option>
+                            <option value="name">Name</option>
+                        </select>
+                    </div>
+                </div>
 
-            <form id="signupForm" action="/SignUp" method="post" class="mb-4">
-                <label class="block mb-2" for="email">Email:</label>
-                <input type="email" id="email" name="email" class="border border-gray-400 px-2 py-1 rounded w-full">
-                <label class="block mb-2" for="password">Password:</label>
-                <input type="password" id="password" name="password"
-                    class="border border-gray-400 px-2 py-1 rounded w-full">
-                <!-- Add more input fields like password, etc. -->
-                <button type="submit"
-                    class="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Signup</button>
-            </form>
 
-            <p class="text-gray-600 text-sm">Already have an account? <button id="openLoginModal"
-                    class="text-black">Login here.</button>
-            </p>
-            <button id="closeSignupModal">Close</button>
-        </dialog>
+
+                <div class="shop-items flex flex-col">
+                    <!-- <div class="shop-item flex">
+                        <img src="product-images/glassStraws.jpg" class="mr-8" alt="glass straws">
+                        <div class="w-[40vw]">
+                            <h5 class="font-bold mb-4">Reusable glass straws</h5>
+                            <p class="text-sm">Sip your beverages in style with these Glass Straws. Made from
+                                high-quality borosilicate
+                                glass, they are durable and can
+                                be reused endlessly. Say goodbye to single-use plastic straws and embrace a more
+                                eco-friendly option.</p>
+                        </div>
+                        <div class="flex flex-col text-right">
+                            <p class="text-red-600 font-bold">€10</p>
+                            <span class="text-green-600 text-sm">ordered before 23:59, delivered the next day </span>
+                            <div class="flex mt-12 justify-end gap-8">
+                                <i class="fa-regular fa-heart py-4 text-xl" style="color: #005eff;"></i>
+                                <button class="add-to-cart-button bg-green-400 rounded-md px-5 py-4 flex gap-4"
+                                    type="button">
+                                    <i class="fa-solid fa-plus text-xl"></i>
+                                    <i class="fa-solid fa-cart-shopping text-xl"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div> -->
+                    <% for (const theme in products) { %>
+                        <% products[theme].forEach(item=> { %>
+                            <div class="shop-item flex">
+                                <img src="product-images/<%- item.imgName %>" class="mr-8 w-96 h-64" alt="glass straws">
+                                <div class="w-[40vw]">
+                                    <h5 class="font-bold mb-4"><%- item.name %></h5>
+                                    <p class="text-sm"><%- item.description %></p>
+                                </div>
+                                <div class="flex flex-col text-right">
+                                    <p class="text-red-600 font-bold">€<%- item.price / 100 %></p>
+                                    <span class="text-green-600 text-sm">ordered before 23:59, delivered the next day
+                                    </span>
+                                    <div class="flex mt-12 justify-end gap-8">
+                                        <i class="fa-regular fa-heart py-4 text-xl" style="color: #005eff;"></i>
+                                        <button class="add-to-cart-button bg-green-400 rounded-md px-5 py-4 flex gap-4"
+                                            type="button">
+                                            <i class="fa-solid fa-plus text-xl"></i>
+                                            <i class="fa-solid fa-cart-shopping text-xl"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <% }); %>
+                                <% } %>
+                </div>
+
+            </section>
+
+            </div>
+
+            <dialog id="loginModal" class="modal-content">
+                <h2 class="text-2xl font-semibold mb-4">Login</h2>
+                <!-- Add your login form here -->
+                <!-- For simplicity, I'm providing basic input fields -->
+                <form id="loginForm" action="/Login" method="post" class="mb-4">
+                    <label class="block mb-2" for="email">Email:</label>
+                    <input type="email" id="email" name="email" class="border border-gray-400 px-2 py-1 rounded w-full">
+                    <label class="block mb-2" for="password">Password:</label>
+                    <input type="password" id="password" name="password"
+                        class="border border-gray-400 px-2 py-1 rounded w-full">
+
+                    <!-- Add more input fields like password, etc. -->
+                    <button type="submit"
+                        class="mt-4 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Login</button>
+                </form>
+                <p class="text-gray-600 text-sm">Don't have an account? <button id="openSignupModal"
+                        class="text-black">Sign
+                        up here.</button>
+                </p>
+                <button id="closeLoginModal">Close</button>
+            </dialog>
+
+
+            <dialog id="signupModal" class="modal-content">
+                <h2 class="text-2xl font-semibold mb-4">Sign Up</h2>
+                <!-- Add your sign-up form here -->
+                <!-- For simplicity, I'm providing basic input fields -->
+
+                <form id="signupForm" action="/SignUp" method="post" class="mb-4">
+                    <label class="block mb-2" for="email">Email:</label>
+                    <input type="email" id="email" name="email" class="border border-gray-400 px-2 py-1 rounded w-full">
+                    <label class="block mb-2" for="password">Password:</label>
+                    <input type="password" id="password" name="password"
+                        class="border border-gray-400 px-2 py-1 rounded w-full">
+                    <!-- Add more input fields like password, etc. -->
+                    <button type="submit"
+                        class="mt-4 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600">Signup</button>
+                </form>
+
+                <p class="text-gray-600 text-sm">Already have an account? <button id="openLoginModal"
+                        class="text-black">Login here.</button>
+                </p>
+                <button id="closeSignupModal">Close</button>
+            </dialog>
+        </main>
 </body>
 
 </html>
