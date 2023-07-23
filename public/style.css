@@ -125,19 +125,20 @@ nav li a:not(.img) {
     left: 0px;
 }
 
-/* .top-menu {
+.above-sep {
     position: relative;
 }
 
-.top-menu::after {
+.above-sep::after {
     position: absolute;
     height: 1px;
-    width: calc(100% - 30px);
+    width: 100%;
     background-color: #333;
     content: "";
-    bottom: -1.5rem;
-    left: 20px;
-} */
+    top: -1.5rem;
+    left: 0px;
+}
+
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
@@ -162,4 +163,45 @@ input[type=number] {
     content: "";
     top: -0.75rem;
     left: 0px;
+}
+
+footer {
+    /* background-color: #333; */
+    color: #fff;
+    padding: 1rem;
+    text-align: center;
+}
+
+/* Style links in the footer */
+footer a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 0.5rem;
+}
+
+.move-to-middle-from-right {
+    /* move to middle of button, with transition  */
+    transform: translateX(-100%);
+    opacity: 0;
+    transition: transform 0.5s ease, opacity 0.5s ease-out;
+}
+
+.move-to-middle-from-left {
+    /* move to middle of button, with transition  */
+    transform: translateX(100%);
+    opacity: 0;
+    transition: transform 0.5s ease, opacity 0.5s ease-in;
+}
+
+.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.fa-solid {
+    transition: all 0.5s ease;
+}
+
+.bg-button-bg-loading {
+    background-color: #cacaca;
 }

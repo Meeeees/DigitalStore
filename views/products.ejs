@@ -16,20 +16,33 @@
     <%- include('partials/header.ejs')%>
 
         <main class="mt-12 flex">
-            <div class="side-menu ml-2 mr-4 w-32">
+            <div class="side-menu ml-6 w-32">
                 <div class="mb-12">
-                    <h3 class="side-menu-sep mb-6">Categories</h3>
-                    <h5 class="font-semibold">Home & Living</h5>
-                    <h5>Personal care</h5>
-                    <h5>Kitchen items</h5>
+                    <h3 class="side-menu-sep mb-6 ">Categories</h3>
+                    <!-- give the h5 with the name of the current theme variable semi-bold class -->
+
+                    <h5 class="<%= theme === '' ? 'font-semibold' : '' %>"><a href="/products/All">All</a>
+                    </h5>
+                    <h5 class="<%= theme === 'Home & Living' ? 'font-semibold' : '' %>"><a
+                            href="/products/Home%20%26%20Living">Home &
+                            Living</a></h5>
+                    <h5 class="<%= theme === 'Personal Care' ? 'font-semibold' : '' %>"><a
+                            href="/products/Personal%20Care">Personal care</a>
+                    </h5>
+                    <h5 class="<%= theme === 'Kitchen Items' ? 'font-semibold' : '' %>"><a
+                            href="/products/Kitchen%20Items">Kitchen items</a>
+                    </h5>
+
                 </div>
 
                 <div>
                     <h3 class="side-menu-sep mb-6">Price (€)</h3>
                     <div class="flex ml-2">
-                        <input type="number" class="w-8 text-center border-[1px] border-gray-400 rounded-md" value="10">
+                        <input type="number" class="w-8 text-center border-[1px] border-gray-400 rounded-md"
+                            id="Price-lowest" value="0">
                         <p class="mx-2">-</p>
-                        <input type="number" class="w-8 text-center border-[1px] border-gray-400 rounded-md" value="10">
+                        <input type="number" class="w-8 text-center border-[1px] border-gray-400 rounded-md"
+                            id="Price-highest" value="<%- (highestPrice / 100).toFixed() %>">
                     </div>
 
 
@@ -39,48 +52,27 @@
                 <div class="top-menu flex justify-between mb-16">
                     <div class="flex">
                         <h3 class="font-bold ourCollection">Our collection</h3>
-                        <h5 class="font-thin ml-6">Home & Living</h5>
+                        <h5 class="font-thin ml-6"><%- theme %></h5>
                     </div>
                     <div class="flex">
                         <p>Sorting</p>
                         <select class="border-2 border-black rounded-md ml-2" name="sort" id="sort">
-                            <option value="price">Price</option>
-                            <option value="name">Name</option>
+                            <option value="nameASC">Name A-Z</option>
+                            <option value="nameDESC">Name Z-A</option>
+                            <option value="priceASC">Price ascending</option>
+                            <option value="priceDESC">Price descending</option>
                         </select>
                     </div>
                 </div>
 
 
 
-                <div class="shop-items flex flex-col">
-                    <!-- <div class="shop-item flex">
-                        <img src="product-images/glassStraws.jpg" class="mr-8" alt="glass straws">
-                        <div class="w-[40vw]">
-                            <h5 class="font-bold mb-4">Reusable glass straws</h5>
-                            <p class="text-sm">Sip your beverages in style with these Glass Straws. Made from
-                                high-quality borosilicate
-                                glass, they are durable and can
-                                be reused endlessly. Say goodbye to single-use plastic straws and embrace a more
-                                eco-friendly option.</p>
-                        </div>
-                        <div class="flex flex-col text-right">
-                            <p class="text-red-600 font-bold">€10</p>
-                            <span class="text-green-600 text-sm">ordered before 23:59, delivered the next day </span>
-                            <div class="flex mt-12 justify-end gap-8">
-                                <i class="fa-regular fa-heart py-4 text-xl" style="color: #005eff;"></i>
-                                <button class="add-to-cart-button bg-green-400 rounded-md px-5 py-4 flex gap-4"
-                                    type="button">
-                                    <i class="fa-solid fa-plus text-xl"></i>
-                                    <i class="fa-solid fa-cart-shopping text-xl"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div> -->
-                    <% for (const theme in products) { %>
+                <div class="shop-items flex flex-col gap-12">
+                    <% if (theme==='' ) { for (const theme in products) { %>
                         <% products[theme].forEach(item=> { %>
-                            <div class="shop-item flex">
-                                <img src="product-images/<%- item.imgName %>" class="mr-8 w-96 h-64" alt="glass straws">
-                                <div class="w-[40vw]">
+                            <div class="shop-item flex justify-end" data-item-Id="<%- item.id %>">
+                                <img src="/product-images/<%- item.imgName %>" class="mr-auto h-64" alt="glass straws">
+                                <div class="w-[40vw] ml-4">
                                     <h5 class="font-bold mb-4"><%- item.name %></h5>
                                     <p class="text-sm"><%- item.description %></p>
                                 </div>
@@ -90,16 +82,63 @@
                                     </span>
                                     <div class="flex mt-12 justify-end gap-8">
                                         <i class="fa-regular fa-heart py-4 text-xl" style="color: #005eff;"></i>
-                                        <button class="add-to-cart-button bg-green-400 rounded-md px-5 py-4 flex gap-4"
+                                        <button
+                                            class="add-to-cart-button bg-button-bg-color  rounded-md px-5 py-4 flex gap-4 relative"
                                             type="button">
                                             <i class="fa-solid fa-plus text-xl"></i>
-                                            <i class="fa-solid fa-cart-shopping text-xl"></i>
+
+                                            <i class="fa-solid fa-cart-shopping text-xl "></i>
+
+                                            <div
+                                                class="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+                                                <i class="fa-solid fa-spinner text-2xl hidden fa-spin-pulse"></i>
+                                                <i class="fa-solid hidden text-2xl absolute top-0 left-0 fa-check"></i>
+                                            </div>
+
                                         </button>
                                     </div>
                                 </div>
                             </div>
                             <% }); %>
                                 <% } %>
+                                    <% } else { %>
+                                        <% products.forEach(item=> { %>
+                                            <div class="shop-item flex justify-end" data-item-Id="<%- item.id %>">
+                                                <img src="/product-images/<%- item.imgName %>" class="mr-auto h-64"
+                                                    alt="glass straws">
+                                                <div class="w-[40vw] ml-4">
+                                                    <h5 class="font-bold mb-4"><%- item.name %></h5>
+                                                    <p class="text-sm"><%- item.description %></p>
+                                                </div>
+                                                <div class="flex flex-col text-right">
+                                                    <p class="text-red-600 font-bold">€<%- item.price / 100 %></p>
+                                                    <span class="text-green-600 text-sm">ordered before 23:59, delivered
+                                                        the next day
+                                                    </span>
+                                                    <div class="flex mt-12 justify-end gap-8">
+                                                        <i class="fa-regular fa-heart py-4 text-xl"
+                                                            style="color: #005eff;"></i>
+                                                        <button
+                                                            class="add-to-cart-button bg-button-bg-color  rounded-md px-5 py-4 flex gap-4 relative"
+                                                            type="button">
+                                                            <i class="fa-solid fa-plus text-xl"></i>
+
+                                                            <i class="fa-solid fa-cart-shopping text-xl "></i>
+
+                                                            <div
+                                                                class="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+                                                                <i
+                                                                    class="fa-solid fa-spinner text-2xl hidden fa-spin-pulse"></i>
+                                                                <i
+                                                                    class="fa-solid hidden text-2xl absolute top-0 left-0 fa-check"></i>
+                                                            </div>
+
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <% }); %>
+                                                <% } %>
                 </div>
 
             </section>
@@ -151,6 +190,7 @@
                 <button id="closeSignupModal">Close</button>
             </dialog>
         </main>
+        <%- include('partials/footer.ejs')%>
 </body>
 
 </html>

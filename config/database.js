@@ -30,15 +30,21 @@ const UserSchema = new Schema({
 
 UserSchema.methods.AddToCart = function (product_id, quantity) {
     let ItemIndex;
+    quantity = parseInt(quantity)
+    product_id = parseInt(product_id)
     this.cart.items.forEach(item => {
         if (item.itemId === product_id) {
             ItemIndex = this.cart.items.indexOf(item)
         }
     });
-
+    console.log(ItemIndex)
     if (ItemIndex !== -1 && ItemIndex !== undefined) {
-        this.cart.items[ItemIndex].quantity = quantity
+        console.log('updating quantity')
+        // parse int
+        CurrentQuantity = parseInt(this.cart.items[ItemIndex].quantity)
+        this.cart.items[ItemIndex].quantity += quantity
     } else {
+        console.log('adding new item')
         this.cart.items.push({ itemId: product_id, quantity: quantity })
     }
     return this.save()
@@ -108,6 +114,7 @@ async function DeleteFromcart(product_id, user_email, EmptyAll, quantity) {
 async function GetCart(user_email) {
     try {
         const user = await User.findOne({ email: user_email })
+        console.log('cart items in db', user.cart.items)
         return user.cart.items
     } catch (err) {
         console.log(err)
@@ -121,3 +128,11 @@ async function GetCart(user_email) {
 module.exports = {
     GetCart, VerifyUser, DeleteFromcart, AddToCart, createUser
 }
+async function func() {
+    const user = await User.findOne({ email: 'mees.v.d@icloud.com' })
+
+    user.RemoveFromCart(4, 0, true).then(res => console.log(res))
+}
+
+
+DeleteFromcart(0, 'mees.v.d@icloud.com', true, 0)
