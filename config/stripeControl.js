@@ -122,3 +122,11 @@ async function MakePrices() {
     fs.writeFileSync('productPrice.json', JSON.stringify(prices))
 
 }
+
+async function getCheckout(id) {
+    const session = await stripe.checkout.sessions.retrieve(id)
+    console.log(session)
+
+}
+
+getCheckout('cs_test_a1B1e7DIwzI1lTEu74v1GRFVcx6GQkUpemDW8WC1tEzcs4M3tAmDbPqt2J')

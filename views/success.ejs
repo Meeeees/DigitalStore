@@ -14,8 +14,17 @@
     <%- include('partials/header.ejs') %>
 
         <!-- make thank you for purchase page with illustration -->
-        <img src="website-images/checkmark.svg" alt="checkmark">
+        <main class="flex justify-center flex-col gap-4 items-center py-32">
+            <div class="bg-[#0021F5] p-8 rounded-full relative mb-6">
+                <i
+                    class="fa-solid fa-check absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] text-4xl text-white"></i>
+            </div>
+            <h1 class="text-4xl ">Thank you for your purchase!</h1>
+            <h2 class="text-xl font-light mb-4">An email has been send to <span class="font-semibold"><%- email
+                        %></span> with your order details</h2>
 
+            <a href="/" class="bg-[#0085FF] rounded-md text-white px-6 py-2">Return to home</a>
+        </main>
 </body>
 
 </html>

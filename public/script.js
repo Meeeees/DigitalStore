@@ -1,4 +1,5 @@
-const loginModal = document.getElementById('loginModal'),
+const body = document.querySelector('body'),
+    loginModal = document.getElementById('loginModal'),
     signupModal = document.getElementById('signupModal'),
     PriceControlHighest = document.querySelector('#Price-highest'),
     PriceControlLowest = document.querySelector('#Price-lowest');
@@ -102,20 +103,27 @@ function ready() {
 }
 
 // script so that footer is always at the bottom of the page
-function Footer() {
+function adjustFooterPosition() {
     const footer = document.querySelector('footer');
-    const body = document.querySelector('body');
-    const html = document.querySelector('html');
-    const height = html.offsetHeight;
+    const main = document.querySelector('main');
+    const contentHeight = main.offsetHeight;
+    const viewportHeight = window.innerHeight;
     const footerHeight = footer.offsetHeight;
-    const bodyHeight = body.offsetHeight;
-    const footerTop = height - footerHeight;
-    if (bodyHeight < height) {
-        footer.style.top = footerTop + 'px';
+
+    if (contentHeight + footerHeight < viewportHeight) {
+        // If the content height + footer height is less than the viewport height,
+        // adjust the margin-top of the footer to push it to the bottom.
+        footer.style.marginTop = `${viewportHeight - (contentHeight + footerHeight)}px`;
     } else {
-        footer.style.top = 'auto';
+        // If the content height + footer height is greater than or equal to the viewport height,
+        // reset the margin-top of the footer to its default value (0).
+        footer.style.marginTop = '0';
     }
 }
+
+// Call the function when the page loads and whenever the window is resized.
+window.addEventListener('load', adjustFooterPosition);
+window.addEventListener('resize', adjustFooterPosition);
 
 function CartReady(items) {
     if (items === '') {
@@ -230,16 +238,35 @@ PriceControlLowest.addEventListener('input', (e) => {
 
 }
 )
-
 function Checkout() {
+    const loadingEvent = new CustomEvent('loading', { detail: { loading: true } })
+    console.log('dispatching loading event..')
+    body.addEventListener('loading', handleLoadingEvent); // Register the event listener
+    body.dispatchEvent(loadingEvent);
+
     fetch('/checkout', {
         method: 'POST'
-    }).then((res) => {
-        console.log(res)
-    }
-    ).catch(err => {
-        console.log(err)
-    }
-    )
+    }).then((res) => res.json())
+        .then((data) => {
+            window.location.href = data.url
+            const finishedLoadingEvent = new CustomEvent('loading', { detail: { loading: false } })
+        }
+        ).catch(err => {
+            console.log(err)
+        }
+        )
 
 }
+
+function handleLoadingEvent(e) {
+    console.log('loading event: ', e.detail.loading);
+    if (e.detail.loading) {
+        // add a spinner icon from fa to the document
+        body.classList.add('loading');
+    } else {
+        body.classList.remove('loading');
+    }
+}
+
+// This should be outside of the function
+

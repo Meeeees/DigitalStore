@@ -8,6 +8,10 @@ const jwt = require('jsonwebtoken');
 const { decode } = require('punycode');
 const stripe = require('stripe')(process.env.SECRET_KEY)
 const morgan = require('morgan')
+const util = require('util');
+const readFileAsync = util.promisify(fs.readFile);
+
+
 require('dotenv').config();
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
@@ -135,86 +139,98 @@ app.post('/cart', (req, res) => {
     }
 })
 
+let userEmail = ''
 app.post('/checkout', async (req, res) => {
-    const token = req.cookies.token;
+    try {
+        const token = req.cookies.token;
+        if (!token) {
+            res.status(401);
+            return res.redirect('/products/All');
+        }
 
-    if (token) {
-        jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
-            if (err) {
-                res.status(401);
-                res.redirect('/products/All');
-            } else {
-                try {
-                    const items = await database.GetCart('mees.v.d@icloud.com');
-                    let data = fs.readFileSync('./config/products.json');
-                    let priceData = fs.readFileSync('./config/productPrice.json');
-                    let line_items = [];
-                    data = JSON.parse(data);
-                    priceData = JSON.parse(priceData);
+        const decoded = await util.promisify(jwt.verify)(token, process.env.JWT_SECRET);
+        const items = await database.GetCart('mees.v.d@icloud.com');
+        userEmail = decoded.email
+        const [data, priceData] = await Promise.all([
+            readFileAsync('./config/products.json', 'utf8'),
+            readFileAsync('./config/productPrice.json', 'utf8')
+        ]);
 
-                    for (const price of priceData["prices"]) {
-                        for (const theme in data) {
-                            for (const product of data[theme]) {
-                                for (const item of items) {
-                                    if (item.itemId === product.id) {
-                                        const productStripe = await stripe.products.retrieve(price.product);
-                                        if (productStripe.name === product.name) {
-                                            console.log("item:", product.name, "product:", productStripe.name);
-                                            line_items.push({
-                                                price: price.id,
-                                                quantity: item.quantity,
-                                            });
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+        const parsedData = JSON.parse(data);
+        const parsedPriceData = JSON.parse(priceData);
 
-                    console.log("line items:", line_items, "shopping card:", items);
-                    const session = await stripe.checkout.sessions.create({
-                        line_items,
-                        mode: 'payment',
-                        invoice_creation: {
-                            enabled: true,
-                        },
-                        success_url: `http://localhost:3000/success`,
-                        cancel_url: `http://localhost:3000/cancel`,
-                    })
-                    res.status(200)
-                    console.log(session)
-                    res.json({ url: session.url })
-
-                } catch (error) {
-                    console.error("Error:", error);
-                    res.status(500).json({ error: "An error occurred" });
+        const matchingItems = [];
+        for (const theme in parsedData) {
+            for (const product of parsedData[theme]) {
+                const foundItem = items.find(item => item.itemId === product.id);
+                if (foundItem) {
+                    matchingItems.push({ ...product, quantity: foundItem.quantity });
                 }
             }
+        }
+
+        const line_items = [];
+        for (const price of parsedPriceData["prices"]) {
+            for (const item of matchingItems) {
+                const productStripe = await stripe.products.retrieve(price.product);
+                if (productStripe.name === item.name) {
+                    console.log("item:", item.name, "product:", productStripe.name);
+                    line_items.push({
+                        price: price.id,
+                        quantity: item.quantity,
+                    });
+                }
+            }
+        }
+
+        console.log("line items:", line_items, "shopping card:", items);
+
+        const session = await stripe.checkout.sessions.create({
+            line_items,
+            mode: 'payment',
+            customer_email: decoded.email,
+            payment_method_types: [
+                'card',
+                'paypal',
+                'ideal'
+            ],
+            invoice_creation: {
+                enabled: true,
+            },
+            success_url: `http://localhost:3000/success`,
+            cancel_url: `http://localhost:3000/products/All`,
         });
-    } else {
-        res.status(401);
-        res.redirect('/products/All');
+
+        res.status(200);
+        console.log(session);
+        const sessionJson = JSON.stringify(session);
+        console.log(sessionJson)
+        res.json({ url: session.url });
+
+    } catch (error) {
+        console.error("Error:", error);
+        res.status(500).json({ error: "An error occurred" });
     }
 });
 
 
 app.get('/success', (req, res) => {
     const token = req.cookies.token
-
+    console.log('loading success page...')
     jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
         if (err) {
             res.status(401)
             res.redirect('/products/All')
         }
         else {
+
+            if (userEmail === '') {
+                userEmail = decoded.email
+            }
             await database.DeleteFromcart(0, decoded.email, true, 0)
-            res.render('success')
+            res.render('success', { email: userEmail })
         }
     })
-})
-
-app.get('/cancel', (req, res) => {
-    res.render('cancel')
 })
 
 

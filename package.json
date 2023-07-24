@@ -21,7 +21,8 @@
     "mongoose": "^7.4.0",
     "morgan": "^1.10.0",
     "nodemon": "^3.0.1",
-    "stripe": "^12.13.0"
+    "stripe": "^12.13.0",
+    "util": "^0.12.5"
   },
   "devDependencies": {
     "tailwindcss": "^3.3.3"

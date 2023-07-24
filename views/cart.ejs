@@ -12,6 +12,10 @@
 </head>
 
 <body class="h-screen" onload="CartReady(`<%- items %>`)">
+
+    <div class="BodySpinner">
+        <i class="fa-solid fa-spinner hidden text-2xl fa-spin-pulse"></i>
+    </div>
     <%- include('partials/header.ejs') %>
         <main class="p-12">
             <h2>Shopping cart</h2>
