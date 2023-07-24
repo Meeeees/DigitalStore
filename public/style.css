@@ -231,3 +231,7 @@ footer a {
     opacity: 1;
     visibility: visible;
 }
+
+.FavoriteItem:hover {
+    cursor: pointer;
+}

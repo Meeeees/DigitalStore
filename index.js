@@ -20,46 +20,64 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser())
 app.use(morgan('tiny'))
 
+// if a user has the statuscode of 304, reload the page
+
 app.get('/', (req, res) => {
     res.render('index')
 }
 );
 
-app.get('/products/:theme', (req, res) => {
-    fs.readFile('./config/products.json', (err, data) => {
+app.get('/products/:theme', async (req, res) => {
+    fs.readFile('./config/products.json', async (err, data) => {
         if (err) {
-            console.log('Error reading file: ', err)
+            console.log('Error reading file: ', err);
         } else {
-            let theme = req.params.theme
-            theme = decodeURIComponent(theme)
+            let theme = req.params.theme;
+            theme = decodeURIComponent(theme);
             const products = JSON.parse(data);
-            // console.log(products)
-            highestPrice = 0
+            let highestPrice = 0;
+
             if (theme === 'All') {
                 for (const theme in products) {
                     products[theme].forEach(product => {
                         if (product.price > highestPrice) {
-                            highestPrice = product.price
+                            highestPrice = product.price;
                         }
                     });
                 }
-                res.render('products', { products: products, theme: '', highestPrice: highestPrice })
             } else {
                 products[theme].forEach(product => {
                     if (product.price > highestPrice) {
-                        highestPrice = product.price
+                        highestPrice = product.price;
                     }
                 });
-                res.render('products', { products: products[theme], theme: theme, highestPrice: highestPrice })
+            }
+
+            if (req.cookies.token) {
+                let token = req.cookies.token;
+                const decoded = jwt.verify(token, process.env.JWT_SECRET);
+                let favorites = await database.Favorites(decoded.email);
+                console.log(favorites);
+                if (theme === 'All') {
+                    res.render('products', { products: products, theme: '', highestPrice: highestPrice, favorites: favorites });
+                } else {
+                    res.render('products', { products: products[theme], theme: theme, highestPrice: highestPrice, favorites: favorites });
+                }
+            } else {
+                if (theme === 'All') {
+                    res.render('products', { products: products, theme: '', highestPrice: highestPrice, favorites: [] });
+                } else {
+                    res.render('products', { products: products[theme], theme: theme, highestPrice: highestPrice, favorites: [] });
+                }
             }
         }
-    })
-}
-);
+    });
+});
+
 
 app.get('/cart', (req, res) => {
+    // reload if statuscode is 304
     const token = req.cookies.token
-    console.log(token)
     if (token) {
         jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
             if (err) {
@@ -76,7 +94,6 @@ app.get('/cart', (req, res) => {
                         let items = await database.GetCart(decoded.email)
                         totalPrice = 0
                         products = JSON.parse(data)
-                        console.log(products)
                         for (const theme in products) {
                             products[theme].forEach(product => {
                                 for (let j = 0; j < items.length; j++) {
@@ -108,24 +125,23 @@ app.post('/cart', (req, res) => {
                     res.end()
 
                 } else {
-                    setTimeout(() => {
-                        console.log(req.query)
-                        console.log(decoded)
+                    console.log(req.query)
+                    console.log(decoded)
+                    res.status(200)
+                    const { buy, quantity, prodId } = req.query
+                    console.log(quantity, prodId, buy)
+                    console.log('performing action...', buy)
+                    if (buy === '0') {
+                        database.AddToCart(prodId, quantity, decoded.email, true)
+                        console.log('added', prodId, quantity)
                         res.status(200)
-                        const { buy, quantity, prodId } = req.query
-                        console.log(quantity, prodId, buy)
-                        console.log('performing action...', buy)
-                        if (buy === '0') {
-                            database.AddToCart(prodId, quantity, decoded.email)
-                            console.log('added', prodId, quantity)
-                            res.status(200)
-                            res.end()
-                        } else {
-                            database.DeleteFromcart(prodId, decoded.email, false, quantity)
-                            res.status(200)
-                            res.end()
-                        }
-                    }, 400);
+                        res.end()
+                    } else if (buy === '1') {
+                        console.log('deleting', prodId, quantity)
+                        database.DeleteFromcart(prodId, decoded.email, false, quantity)
+                        res.status(200)
+                        res.end()
+                    }
 
                 }
             })
@@ -138,6 +154,61 @@ app.post('/cart', (req, res) => {
 
     }
 })
+
+app.delete('/cart/:id/:quantity', (req, res) => {
+    console.log("\n\n NEW DELETE REQ")
+    if (req.cookies.token) {
+        let token = req.cookies.token
+        if (token) {
+            jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
+                if (err) {
+                    console.log(err)
+                    res.status(401)
+                    res.end()
+                } else {
+                    console.log(decoded)
+                    console.log('deleting', req.params.id, req.params.quantity)
+                    await database.DeleteFromcart(req.params.id, decoded.email, false, req.params.quantity)
+                    res.status(200)
+
+                    res.end()
+                }
+            })
+        } else {
+            console.log('no token')
+            res.status(401)
+            res.end()
+        }
+    }
+})
+
+app.put('/cart/:id/:quantity', (req, res) => {
+    console.log("\n\n NEW PUT REQ")
+    if (req.cookies.token) {
+        let token = req.cookies.token
+        if (token) {
+            jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
+                if (err) {
+                    console.log(err)
+                    res.status(401)
+                    res.end()
+                } else {
+                    console.log(decoded)
+                    console.log('adding', req.params.id, req.params.quantity)
+                    console.log(decoded.email)
+                    await database.AddToCart(req.params.id, req.params.quantity, decoded.email, false)
+                    res.status(200)
+                    res.end()
+                }
+            })
+        } else {
+            console.log('no token')
+            res.status(401)
+            res.end()
+        }
+    }
+})
+
 
 let userEmail = ''
 app.post('/checkout', async (req, res) => {
@@ -213,6 +284,29 @@ app.post('/checkout', async (req, res) => {
     }
 });
 
+app.post('/favorite', (req, res) => {
+    let token = req.cookies.token
+    if (token) {
+        jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
+            if (err) {
+                console.log(err)
+                res.status(401)
+                res.end()
+            } else {
+                let id = req.query.prodId
+                let action = req.query.action
+                await database.AddToFavorites(id, action, decoded.email)
+                res.status(200)
+                res.end()
+            }
+        }
+        )
+    } else {
+        console.log('no token')
+        res.status(401)
+        res.end()
+    }
+})
 
 app.get('/success', (req, res) => {
     const token = req.cookies.token
