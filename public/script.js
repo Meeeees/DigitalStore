@@ -268,5 +268,42 @@ function handleLoadingEvent(e) {
     }
 }
 
-// This should be outside of the function
-
+document.querySelectorAll('.FavoriteItem').forEach(item => {
+    item.addEventListener('click', (e) => {
+        let id = item.parentNode.parentNode.parentNode.dataset.itemId
+        console.log(id)
+        if (item.classList.contains('fa-solid')) {
+            fetch(`/favorite?prodId=${id}&action=remove`, {
+                method: 'POST'
+            }).then((res) => {
+                if (res.status === 401) {
+                    OpenloginModal()
+                }
+                if (res.ok) {
+                    item.classList.toggle('fa-regular')
+                    item.classList.toggle('fa-solid')
+                } else {
+                    throw new Error('Request failed with status ' + res.status);
+                }
+            }).catch(err => {
+                console.log(err)
+            })
+        } else {
+            fetch(`/favorite?prodId=${id}&action=add`, {
+                method: 'POST'
+            }).then((res) => {
+                if (res.status === 401) {
+                    OpenloginModal()
+                }
+                if (res.ok) {
+                    item.classList.toggle('fa-regular')
+                    item.classList.toggle('fa-solid')
+                } else {
+                    throw new Error('Request failed with status ' + res.status);
+                }
+            }).catch(err => {
+                console.log(err)
+            })
+        }
+    })
+})

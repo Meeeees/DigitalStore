@@ -21,7 +21,7 @@
                     <h3 class="side-menu-sep mb-6 ">Categories</h3>
                     <!-- give the h5 with the name of the current theme variable semi-bold class -->
 
-                    <h5 class="<%= theme === '' ? 'font-semibold' : '' %>"><a href="/products/All">All</a>
+                    <h5 class="<%= theme === '' ? ' font-semibold' : '' %>"><a href="/products/All">All</a>
                     </h5>
                     <h5 class="<%= theme === 'Home & Living' ? 'font-semibold' : '' %>"><a
                             href="/products/Home%20%26%20Living">Home &
@@ -78,24 +78,38 @@
                                 </div>
                                 <div class="flex flex-col text-right">
                                     <p class="text-red-600 font-bold">€<%- item.price / 100 %></p>
-                                    <span class="text-green-600 text-sm">ordered before 23:59, delivered the next day
+                                    <span class="text-green-600 text-sm">ordered before 23:59, delivered the next
+                                        day
                                     </span>
                                     <div class="flex mt-12 justify-end gap-8">
-                                        <i class="fa-regular fa-heart py-4 text-xl" style="color: #005eff;"></i>
-                                        <button
-                                            class="add-to-cart-button bg-button-bg-color  rounded-md px-5 py-4 flex gap-4 relative"
-                                            type="button">
-                                            <i class="fa-solid fa-plus text-xl"></i>
+                                        <!-- test to see if console.log work -->
+                                        <% if (favorites.some(favorite=> favorite.itemId ===
+                                            item.id)) {
+                                            %>
+                                            <!-- Item is a favorite -->
+                                            <i class="fa-solid fa-heart FavoriteItem Favorite py-4 text-xl"
+                                                style="color: #005eff;"></i>
+                                            <% } else { %>
+                                                <!-- Item is not a favorite -->
+                                                <i class="fa-regular fa-heart FavoriteItem py-4 text-xl"
+                                                    style="color: #005eff;"></i>
+                                                <% } %>
+                                                    <button
+                                                        class="add-to-cart-button bg-button-bg-color  rounded-md px-5 py-4 flex gap-4 relative"
+                                                        type="button">
+                                                        <i class="fa-solid fa-plus text-xl"></i>
 
-                                            <i class="fa-solid fa-cart-shopping text-xl "></i>
+                                                        <i class="fa-solid fa-cart-shopping text-xl "></i>
 
-                                            <div
-                                                class="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
-                                                <i class="fa-solid fa-spinner text-2xl hidden fa-spin-pulse"></i>
-                                                <i class="fa-solid hidden text-2xl absolute top-0 left-0 fa-check"></i>
-                                            </div>
+                                                        <div
+                                                            class="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+                                                            <i
+                                                                class="fa-solid fa-spinner text-2xl hidden fa-spin-pulse"></i>
+                                                            <i
+                                                                class="fa-solid hidden text-2xl absolute top-0 left-0 fa-check"></i>
+                                                        </div>
 
-                                        </button>
+                                                    </button>
                                     </div>
                                 </div>
                             </div>
@@ -112,28 +126,43 @@
                                                 </div>
                                                 <div class="flex flex-col text-right">
                                                     <p class="text-red-600 font-bold">€<%- item.price / 100 %></p>
-                                                    <span class="text-green-600 text-sm">ordered before 23:59, delivered
+                                                    <span class="text-green-600 text-sm">ordered before 23:59,
+                                                        delivered
                                                         the next day
                                                     </span>
                                                     <div class="flex mt-12 justify-end gap-8">
-                                                        <i class="fa-regular fa-heart py-4 text-xl"
-                                                            style="color: #005eff;"></i>
-                                                        <button
-                                                            class="add-to-cart-button bg-button-bg-color  rounded-md px-5 py-4 flex gap-4 relative"
-                                                            type="button">
-                                                            <i class="fa-solid fa-plus text-xl"></i>
+                                                        <% console.log(theme) %>
 
-                                                            <i class="fa-solid fa-cart-shopping text-xl "></i>
+                                                            <!-- test to see if console.log work -->
+                                                            <% if (favorites.some(favorite=> favorite.itemId ===
+                                                                item.id)) {
+                                                                %>
+                                                                <!-- Item is a favorite -->
+                                                                <i class="fa-solid fa-heart FavoriteItem Favorite py-4 text-xl"
+                                                                    style="color: #005eff;"></i>
+                                                                <% } else { %>
+                                                                    <!-- Item is not a favorite -->
+                                                                    <i class="fa-regular fa-heart FavoriteItem py-4 text-xl"
+                                                                        style="color: #005eff;"></i>
+                                                                    <% } %>
 
-                                                            <div
-                                                                class="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
-                                                                <i
-                                                                    class="fa-solid fa-spinner text-2xl hidden fa-spin-pulse"></i>
-                                                                <i
-                                                                    class="fa-solid hidden text-2xl absolute top-0 left-0 fa-check"></i>
-                                                            </div>
+                                                                        <button
+                                                                            class="add-to-cart-button bg-button-bg-color  rounded-md px-5 py-4 flex gap-4 relative"
+                                                                            type="button">
+                                                                            <i class="fa-solid fa-plus text-xl"></i>
 
-                                                        </button>
+                                                                            <i
+                                                                                class="fa-solid fa-cart-shopping text-xl "></i>
+
+                                                                            <div
+                                                                                class="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]">
+                                                                                <i
+                                                                                    class="fa-solid fa-spinner text-2xl hidden fa-spin-pulse"></i>
+                                                                                <i
+                                                                                    class="fa-solid hidden text-2xl absolute top-0 left-0 fa-check"></i>
+                                                                            </div>
+
+                                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>

@@ -22,46 +22,58 @@
             <section class="flex justify-between above-sep mt-12 gap-12">
                 <div class="flex flex-col gap-12">
                     <% if (items !==undefined) { %>
-                        <% items.forEach(item=> { %>
-                            <% for (const theme in products) { %>
-                                <% products[theme].forEach(product=> { %>
-                                    <% if (item.itemId===product.id) { %>
-                                        <div class="cart-row w-[50vw] border-gray-300 border-2 p-12  mb-18 grid grid-flow-col grid-cols-4 gap-6"
-                                            ProdId="<%- product.id %>">
-                                            <img src="/product-images/<%- product.imgName %>"
-                                                class="w-full object-cover mr-8 col-span-1" alt="product image">
-                                            <div class="text flex flex-col col-span-3">
-                                                <div class="flex justify-between w-full mb-4">
-                                                    <h3><%- product.name %></h3>
-                                                    <span class="text-red-500 font-bold">€<%- product.price / 100
-                                                            %></span>
-                                                </div>
-                                                <div class="flex flex-col">
-                                                    <input type="number"
-                                                        class="w-8 h-min border-[1px] pl-1 pr-2 border-black QuantityInput"
-                                                        value="<%- item.quantity %>">
-                                                    <div class="flex mt-8 gap-4 [&>*]:text-2xl"><button
-                                                            class="FavoriteItem"><i
-                                                                class="fa-solid fa-heart"></i></button>
-                                                        <button class=" RemoveFromCart"><i
-                                                                class="fa-solid fa-trash-can"></i></button>
 
+                        <% if (items.length===0) { %>
+                            <div class="ml-[25vw] text-center">
+                                <h3 class="text-2xl">Your cart is empty</h3>
+                                <img src="website-images/emptyBox.jpg" alt="empty box" class="h-[40vh]">
+                                <a href="/products/All" class="bg-[#0085FF] rounded-md text-white px-6 py-2">Continue
+                                    Shopping</a>
+
+                            </div>
+                            <% } %>
+
+                                <% items.forEach(item=> { %>
+                                    <% for (const theme in products) { %>
+                                        <% products[theme].forEach(product=> { %>
+                                            <% if (item.itemId===product.id) { %>
+                                                <div class="cart-row w-[50vw] border-gray-300 border-2 p-12  mb-18 grid grid-flow-col grid-cols-4 gap-6"
+                                                    data-ProdId="<%- product.id %>">
+                                                    <img src="/product-images/<%- product.imgName %>"
+                                                        class="w-full object-cover mr-8 col-span-1" alt="product image">
+                                                    <div class="text flex flex-col col-span-3">
+                                                        <div class="flex justify-between w-full mb-4">
+                                                            <h3><%- product.name %></h3>
+                                                            <span class="text-red-500 font-bold">€<%- product.price /
+                                                                    100 %></span>
+                                                        </div>
+                                                        <div class="flex flex-col">
+                                                            <input type="number"
+                                                                class="w-8 h-min border-[1px] pl-1 pr-2 border-black QuantityInput"
+                                                                value="<%- item.quantity %>">
+                                                            <div class="flex mt-8 gap-4 [&>*]:text-2xl">
+                                                                <i
+                                                                    class="fa-solid fa-heart FavoriteItem cursor-pointer"></i>
+                                                                <i
+                                                                    class="fa-solid fa-trash-can RemoveFromCart cursor-pointer"></i>
+
+                                                            </div>
+                                                            <p class="text-sm mt-4 font-extralight text-green-400">
+                                                                Ordered
+                                                                before
+                                                                23:59,
+                                                                delivered
+                                                                the
+                                                                next day</p>
+                                                        </div>
                                                     </div>
-                                                    <p class="text-sm mt-4 font-extralight text-green-400">Ordered
-                                                        before
-                                                        23:59,
-                                                        delivered
-                                                        the
-                                                        next day</p>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <% } %>
-                                            <% }); %>
                                                 <% } %>
                                                     <% }); %>
+                                                        <% } %>
+                                                            <% }); %>
                 </div>
-                <div class="border-[1px] h-max border-gray-300 p-8">
+                <div class="border-[1px] h-max border-gray-300 p-8 ml-auto">
                     <h3 class=" mb-12">Overview</h3>
                     <div class="above-sep">
                         <% items.forEach(item=> { %>
@@ -94,6 +106,7 @@
 
             </section>
         </main>
+
         <% } else { %>
             <dialog id="loginModal" class="modal-content">
                 <h2 class="text-2xl font-semibold mb-4">Login</h2>
@@ -138,6 +151,41 @@
             <% } %>
                 <%- include('partials/footer.ejs')%>
 
+                    <script>
+
+                        document.querySelectorAll('.QuantityInput').forEach(input => {
+                            input.addEventListener('change', (e) => {
+                                let inputEl = e.currentTarget
+                                let id = inputEl.parentNode.parentNode.parentNode.dataset.prodid
+                                let NewQuantity = inputEl.value
+                                fetch(`/cart/${id}/${NewQuantity}`, {
+                                    method: 'PUT'
+                                }).then(res => {
+                                    if (res.ok) {
+                                        window.location.href = '/cart'
+                                    }
+                                })
+                            })
+                        })
+
+                        document.querySelectorAll('.RemoveFromCart').forEach(button => {
+                            button.addEventListener('click', (e) => {
+                                e.stopPropagation(); // Stop event propagation to prevent parent buttons from triggering
+                                let buttonEl = e.currentTarget
+                                let id = buttonEl.parentNode.parentNode.parentNode.parentNode.dataset.prodid
+                                fetch(`/cart/${id}/${0}`, {
+                                    method: 'DELETE'
+                                }).then(res => {
+                                    if (res.ok) {
+
+                                        window.location.href = '/cart'
+                                    }
+                                })
+                            })
+                        })
+                    </script>
 </body>
+
+
 
 </html>

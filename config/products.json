@@ -1,5 +1,5 @@
 {
-    "KitchenItems": [
+    "Kitchen Items": [
         {
             "id": 1,
             "name": "Beeswax Food Wraps",
@@ -57,7 +57,7 @@
             "description": "Upgrade your baking game with these Reusable Silicone Baking Mats. They provide a non-stick surface for baking and roasting, eliminating the need for parchment paper or cooking sprays. Easy to clean and eco-friendly for all your baking needs."
         }
     ],
-    "PersonalCare": [
+    "Personal Care": [
         {
             "id": 6,
             "name": "Bamboo Toothbrushes",
@@ -91,7 +91,7 @@
             "description": "Create a cozy and eco-friendly ambiance with these Reusable Beeswax Tea Light Candles. Made from natural beeswax, they emit a warm and soothing glow, perfect for any occasion. Reduce waste and enjoy the natural beauty of beeswax candles."
         }
     ],
-    "HomeLiving": [
+    "Home & Living": [
         {
             "id": 10,
             "name": "Eco-Friendly Reusable Grocery Bags",
